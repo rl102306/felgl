@@ -4,6 +4,8 @@ from flask import Flask, Response, request, jsonify, abort
 
 from flask_cors import CORS
 
+from fel import felfact
+
 
 app = Flask(__name__)
 
@@ -15,8 +17,7 @@ cors = CORS(app,resources={r"/*": {"origin":"*"}})
 
 def index():
 
-    return'<h1>Hola Mundo</h1>'
-
+    return jsonify({'text':'Hello World!'})
 
 
 @app.route('/gfact', methods=['POST'])
@@ -26,12 +27,15 @@ def genfact():
     parse_request = request.data.decode('utf-8')
 
 
+@app.route('/addlogo', methods=['POST'])
 
+def addlogofact():
 
+    firsttest = felfact()
 
+    firsttest.addlogopdf()
 
-
-
+    return jsonify({'text':'Archivo Generado'})
 
 
 
@@ -39,4 +43,4 @@ def genfact():
 
 if __name__ == '__main__':
 
-    app.run(port=5000, debug=True)
+    app.run(port=5002, debug=True)
