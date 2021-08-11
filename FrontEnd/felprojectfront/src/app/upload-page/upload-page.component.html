@@ -1,4 +1,38 @@
-<p>upload-page works!</p>
+
+<h1>Subir Documentos</h1>
+
+<div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <input type="file" name="profile" (change)="onChange($event)" />
+    
+    <button  mat-mini-fab color="warn" type="submit"> <mat-icon>file_upload</mat-icon></button>
+
+  </form>
+
+</div>
+
+<div *ngIf="response && fileURL">
+
+  <pdf-viewer [src]="fileURL" [render-text]="true" style="display: block;"></pdf-viewer>
+
+</div>
+
+<!--
+<input type="file" class="file-input"
+       (change)="capturarFile($event)" #fileUpload>
+
+<div class="file-upload">
+
+   {{fileName || "Aún no se ha subido ningún archivo."}}
+
+    <button mat-mini-fab color="warn" class="upload-btn"
+      (click)="fileUpload.click()">
+        <mat-icon>attach_file</mat-icon>
+    </button>
+</div>
+
 
 <div>
 
@@ -10,4 +44,4 @@
 <h2>Integrate PDF File Viewer in Angular</h2>
 
 <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;">
-</pdf-viewer>
+</pdf-viewer> -->

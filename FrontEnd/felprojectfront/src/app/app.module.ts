@@ -11,6 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { UploadPageComponent } from './upload-page/upload-page.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     MaterialModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    PdfViewerModule
+    PdfViewerModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
