@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
+
   title = 'felprojectfront';
+
+  empresa = 'CeseOnline'
+
+
+
+  getName(): void{
+
+    console.log("Hola me llamo Victor Gomez");
+
+  }
 }
