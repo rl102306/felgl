@@ -20,6 +20,10 @@ export class UploadPageComponent implements OnInit {
   
   fileURL: any;
 
+  filetype: any;
+
+  filerutaback: any;
+
   constructor(private formBuilder: FormBuilder, private uploadService: UploadService) { 
 
 
@@ -34,9 +38,15 @@ export class UploadPageComponent implements OnInit {
   }
 
   onChange(event:any) {
+
     if (event.target.files.length > 0) {
+      
       const file = event.target.files[0];
+      
       this.form.get('profile').setValue(file);
+      
+      this.filetype = file.type;
+    
     }
   }
 
@@ -55,6 +65,10 @@ export class UploadPageComponent implements OnInit {
         this.fileURL = `${this.DJANGO_SERVER}${res.file}`;
     
         console.log(res);
+
+        this.filerutaback = res.file;
+        
+        console.log(res.id);
     
         console.log(this.fileURL);
       },
