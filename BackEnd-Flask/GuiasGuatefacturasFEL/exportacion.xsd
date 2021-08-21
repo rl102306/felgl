@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+  <xsd:simpleType name="integer10_or_null">
+    <xsd:union>
+      <xsd:simpleType>
+        <xsd:restriction base='xsd:string'>
+          <xsd:length value='0'/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType>
+        <xsd:restriction base='xsd:integer'>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:union>
+  </xsd:simpleType>
+  <xsd:simpleType name="integer18_or_null">
+    <xsd:union>
+      <xsd:simpleType>
+        <xsd:restriction base='xsd:string'>
+          <xsd:length value='0'/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType>
+        <xsd:restriction base='xsd:integer'>
+          <xsd:totalDigits value="18"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:union>
+  </xsd:simpleType>
+  <xsd:simpleType name="decimal_zero_positive20_2">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="0"/>
+      <xsd:fractionDigits value="2"/>
+      <xsd:totalDigits value="20"/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="decimal_zero_positive20_5">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="0.00001"/>
+      <xsd:fractionDigits value="5"/>
+      <xsd:totalDigits value="20"/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="decimal_zero_positive20_6">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="0"/>
+      <xsd:fractionDigits value="6"/>
+      <xsd:totalDigits value="20"/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="decimal_zero_positive20_7">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="0"/>
+      <xsd:fractionDigits value="7"/>
+      <xsd:totalDigits value="20"/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="decimal_zero_positive10_6">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="0"/>
+      <xsd:fractionDigits value="6"/>
+      <xsd:totalDigits value="10"/>
+    </xsd:restriction>
+</xsd:simpleType>
+  <xsd:simpleType name="integer_limited3">
+    <xsd:restriction base="xsd:integer">
+      <xsd:totalDigits value="3"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="integer_limited2">
+    <xsd:restriction base="xsd:integer">
+      <xsd:totalDigits value="2"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string_limited10">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="10"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string_limited20">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="20"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string_limited40">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="40"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string_limited200">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="200"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string_limited2000">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="2000"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="DocElectronico">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Encabezado">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="Receptor">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="NITReceptor" type="string_limited20">
+                      <xsd:annotation>
+                        <xsd:documentation>Buyer TaxID / NIT del cliente comprador</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Nombre" type="string_limited200" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Buyer name (Optional, must be sent if you are a Final Consumer) / Nombre del cliente comprador (Opcional, debe mandarse si es Consumidor Final)</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Direccion" type="string_limited200" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Buyer address (Optional, must be sent if you are a Final Consumer) / Dirección del cliente comprador (Opcional, debe mandarse si es Consumidor Final)</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="InfoDoc">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="TipoVenta">
+                      <xsd:annotation>
+                        <xsd:documentation>Indicates if the type of sale corresponds to B = Goods or S = Services / Indica si el tipo de venta corresponde a B=Bienes o S=Servicios</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="S"/>
+                          <xsd:enumeration value="B"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="DestinoVenta" type="integer_limited3">
+                      <xsd:annotation>
+                        <xsd:documentation>Indicates the country of destination of the sale. (1 = Guatemala) / Indica el país de destino de la venta. (1=Guatemala)</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Fecha" type="string_limited10">
+                      <xsd:annotation>
+                        <xsd:documentation>Date of the document in DD / MM / YYYY format / Fecha del documento en formato DD/MM/AAAA</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Moneda">
+                      <xsd:annotation>
+                        <xsd:documentation>Currency Code (1 = Quetzal, 2 = Dollar) / Código de Moneda siendo (1= Quetzal, 2= Dólar)</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="2"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="Tasa" type="decimal_zero_positive10_6">
+                      <xsd:annotation>
+                        <xsd:documentation>Currency exchange rate (1 when the currency is quetzal) / Tasa de cambio según moneda (1 cuando la moneda es quetzal)</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Referencia" type="string_limited40">
+                      <xsd:annotation>
+                        <xsd:documentation>Unique identifier in the original system (of the ISSUER). This data is mandatory and is the basis for making reversals / Identificador único en el sistema original (del EMISOR). Este dato es obligatorio y es la base para realizar reversiones</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="NumeroAcceso" type="integer10_or_null" nillable="true">
+                      <xsd:annotation>
+                        <xsd:documentation>A random number is used as a reference for an operation that has been performed in contingency / Número aleatorio, se utiliza como referencia para una operación que haya sido realizada en contingencia</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="SerieAdmin" type="xsd:string" nillable="true">
+                      <xsd:annotation>
+                        <xsd:documentation>Administrative series to facilitate the control of documents in Electronic Invoicing [FEL] / Serie administrativa para facilitar el control de los documentos en FEL</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="NumeroAdmin" type="integer18_or_null" nillable="true">
+                      <xsd:annotation>
+                        <xsd:documentation>Administrative number to facilitate the control of documents in Electronic Invoicing [FEL] / Número administrativo para facilitar el control de los documentos en FEL</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Reversion" nillable="true" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Optional, indicate if you should cancel the previously generated document, "S" to revert the operation, "N" or empty so as not to revert, the TAG may also not be included. / Opcional, indica si debe anular el documento anteriormente generado, “S” para revertir la operación, “N” o vacío para no hacer reversión, también puede no incluirse el TAG</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:simpleType>
+                        <xsd:union>
+                          <xsd:simpleType>
+                            <xsd:restriction base='xsd:string'>
+                              <xsd:length value='0'/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                              <xsd:enumeration value="S"/>
+                              <xsd:enumeration value="N"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:union>
+                      </xsd:simpleType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="Totales">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Bruto" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Gross amount after calculating price by quantity / Importe bruto luego de calcular precio por cantidad</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Descuento" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Discount amount applied to each document / Importe descuento aplicado a cada documento</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Exento" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Exempt amount from VAT calculation / Importe exento de cálculo de IVA</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Otros" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Other taxes amount not subject to VAT / Importe otros impuestos no afectos al IVA</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Neto" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Net amount subject to VAT calculation / Importe neto sujeto a cálculo de IVA</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Isr" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Income Tax amount applied to the document, it should always be “0” / Importe ISR aplicado al documento</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Iva" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Amount VAT applied on net amount / Importe IVA aplicado sobre importe neto</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Total" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Total amount of the document / Importe total del documento</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+		<xsd:element name="DatosAdicionales" minOccurs="0">
+          <xsd:annotation>
+            <xsd:documentation>Additional data of documents as required by the ISSUER / Datos adicionales de documentos según requiera el EMISOR. El tipo de dato y la longitud de los datos adicionales se define conjuntamente con el Emisor, según se requiera.</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="AbonosFacturaCambiaria" minOccurs="0">
+          <xsd:annotation>
+            <xsd:documentation>It only applies to Exchange Invoices [Facturas Cambiarias] / Solo aplica para Facturas Cambiarias</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="Abono">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="NumeroAbono" type="xsd:nonNegativeInteger">
+                      <xsd:annotation>
+                        <xsd:documentation>Correlation number of the Installment / Numero correlativo del Abono</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="FechaVencimiento" type="string_limited10">
+                      <xsd:annotation>
+                        <xsd:documentation>Expiration Date of the Installment in YYYYMMDD format / Fecha del Vencimiento del Abono</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="MontoAbono" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Amount of the Installment to be paid / Monto del Abono a realizar</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        
+        <xsd:element name="Detalles">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="Productos" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Producto" type="string_limited20">
+                      <xsd:annotation>
+                        <xsd:documentation>Product code to be loaded / Código del producto a ser cargado</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Descripcion" type="string_limited2000">
+                      <xsd:annotation>
+                        <xsd:documentation>Product description to be loaded / Descripción del producto a cargar</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Medida" type="integer_limited2">
+                      <xsd:annotation>
+                        <xsd:documentation>Unique unit of measure identifier (1 = UNIT) / Identificador único de unidad de medida (1=UNIDAD)</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Cantidad" type="decimal_zero_positive20_5">
+                      <xsd:annotation>
+                        <xsd:documentation>Amount of product being loaded / Cantidad del producto que se está cargando</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Precio" type="decimal_zero_positive20_7">
+                      <xsd:annotation>
+                        <xsd:documentation>Unit price of the product, VAT included / Precio unitario del producto, IVA incluido</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="PorcDesc" type="decimal_zero_positive20_6">
+                      <xsd:annotation>
+                        <xsd:documentation>Discount percentage applied to the product / Porcentaje de descuento aplicado al producto</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="ImpBruto" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Gross amount result of price by quantity / Importe Bruto resultado de precio por cantidad</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="ImpDescuento" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Discount amount applied to the product / Importe Descuento aplicado al producto</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="ImpExento" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Exempt amount of VAT calculation / Importe Exento de cálculo de IVA</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="ImpOtros" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Amount of Other taxes / Importe de Otros impuestos</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="ImpNeto" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Net Amount after subtracting discounts and that is subject to VAT / Importe Neto luego de restar descuentos y que está sujeto de IVA</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="ImpIsr" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Income Tax amount applied to the document, it should always be “0” / Importe ISR aplicado al documento</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="ImpIva" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>VAT amount applied on net amount / Importe IVA aplicado sobre importe neto</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="ImpTotal" type="decimal_zero_positive20_2">
+                      <xsd:annotation>
+                        <xsd:documentation>Total amount of the document / Importe total del documento</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+				    <xsd:element name="TipoVentaDet">
+                            <xsd:annotation>
+                              <xsd:documentation>Indicates if the type of sale corresponds to B = Goods or S = Services / Indica si el tipo de venta corresponde a B=Bienes o S=Servicios</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="S"/>
+                                <xsd:enumeration value="B"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                    </xsd:element>
+				  <xsd:element name="DatosAdicionalesProd" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Additional product data as required by the ISSUER / Datos adicionales de productos según requiera el EMISOR</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="DocAsociados" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>Optional only for Credit and Debit Notes / Opcional solo para Notas de crédito y débito</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="DASerie" type="string_limited20">
+                      <xsd:annotation>
+                        <xsd:documentation>Series of the document associated with the Debit or Credit Note  / Serie del documento asociado a la Nota de Débito o Crédito</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="DAPreimpreso" type="integer18_or_null" nillable="true">
+                      <xsd:annotation>
+                        <xsd:documentation>Preprinted of the document associated with the Debit or Credit Note / Preimpreso del documento asociado a la Nota de Débito o Crédito</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
