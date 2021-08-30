@@ -44,6 +44,8 @@ export class UcfComponent implements OnInit {
 
   direccion:any;
 
+  response_token:any;
+
 
   constructor(private _formBuilder: FormBuilder, private uploads:UploadService) {
 
@@ -88,18 +90,20 @@ export class UcfComponent implements OnInit {
       
       this.first_form_group.get('name_file_fact').setValue(file);
       
-      console.log(file)
+      console.log('Vamos a ver'+ file)
     
     }
   }
 
   onSubmit() {
 
+    this.response_token = "d5894c0321e4ef7b55b4eac02c027e484167fd97"
+
     const formData = new FormData();
     
     formData.append('file', this.first_form_group.get('name_file_fact').value);
 
-    this.uploads.uploadfile(formData).subscribe(
+    this.uploads.uploadfile(formData,this.response_token).subscribe(
 
       (res) => {
     
@@ -107,20 +111,25 @@ export class UcfComponent implements OnInit {
     
         this.fileurl = `${this.DJANGO_SERVER}${res.file}`;
     
-        console.log(res);
+        //console.log('Soy yo 1'+ res);
 
-        this.fileurlback = res.file;
+        //this.fileurlback = res.file;
         
-        console.log(res.id);
+        //console.log('Soy yo 2 '+ res.id);
     
-        console.log(this.fileurl);
+        //console.log('Soy yo 3' + this.fileurl);
+
+        alert('Archivo cargado.')
 
        
       },
     
       (err) => {  
+
         
-        console.log(err);
+        alert('Ocurrio un error, intente cargarlo de nuevo.')
+        
+        //console.log('Soy yo' + err);
       }
     );
 
@@ -129,6 +138,8 @@ export class UcfComponent implements OnInit {
 
   onSubmitfactdir() {
 
+    this.response_token = "d5894c0321e4ef7b55b4eac02c027e484167fd97"
+
     const formData = new FormData();
     
     formData.append('posicion', this.thirdFormGroup.get('direction').value);
@@ -136,7 +147,7 @@ export class UcfComponent implements OnInit {
     formData.append('url',this.fileurl);
 
         
-    this.uploads.postfile(formData).subscribe(
+    this.uploads.postfile(formData,this.response_token).subscribe(
       
       (res) => {
     
@@ -144,9 +155,9 @@ export class UcfComponent implements OnInit {
     
         this.fileurlback = `${this.DJANGO_SERVER}${res}`;
         
-        console.log(this.response);
+        //console.log(this.response);
 
-        console.log(this.fileurlback);
+        //console.log(this.fileurlback);
 
         //this.filerutaback = res.file;
         
