@@ -45,13 +45,16 @@
           
           <button mat-mini-fab color="warn" type="submit"><mat-icon>file_upload</mat-icon></button>
        
-          <button mat-raised-button matStepperNext>Siguiente</button>
       </mat-card-actions>
       </form>
+
+      <button mat-raised-button matStepperNext>Siguiente</button>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
       <form [formGroup]="secondFormGroup">
         <ng-template matStepLabel>Vista Previa</ng-template>
+
+        <pdf-viewer [src]="fileurl" style="display: block;"></pdf-viewer>
         <!--!<mat-form-field appearance="fill">
           <mat-label>Address</mat-label>
           <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
@@ -64,11 +67,12 @@
         </div>
         <ngx-extended-pdf-viewer [src]="fileurl" [useBrowserLocale]="true" height="50vh"></ngx-extended-pdf-viewer>
         -->
-        <div>
-          <button mat-raised-button matStepperPrevious>Back</button>
-          <button mat-raised-button matStepperNext>Next</button>
-        </div>
+        
       </form>
+      <div>
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext>Next</button>
+      </div>
     </mat-step>
 
     <mat-step [stepControl]="thirdFormGroup" [editable]="isEditable">
@@ -106,9 +110,9 @@
       <form [formGroup]="fourthFromGroup" (ngSubmit)="onSubmit()">
       
       <ng-template matStepLabel>Factura con logo</ng-template>
-      <ngx-extended-pdf-viewer [src]="fileurlback" [useBrowserLocale]="true" height="50vh"></ngx-extended-pdf-viewer>
+      <!-- <ngx-extended-pdf-viewer [src]="fileurlback" [useBrowserLocale]="true" height="50vh"></ngx-extended-pdf-viewer>
       
-      
+      -->
       <p></p>
       <div>
         <mat-radio-group aria-label="Seleccion una opcion: ">

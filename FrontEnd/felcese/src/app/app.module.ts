@@ -15,6 +15,9 @@ import { UcfComponent } from './ucf/ucf.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 import { HttpClientModule } from '@angular/common/http';
+import { SignupComponent } from './signup/signup.component';
+
+import { AuthGuardService } from './AuthGuard/auth-guard.service';
 
 
 
@@ -23,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     UploadpageComponent,
     LoginComponent,
-    UcfComponent
+    UcfComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [],
+  providers: [AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

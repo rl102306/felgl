@@ -1,0 +1,63 @@
+	DJANGO ADMINISTRATION
+Usuariolo: optimuzlogfa
+Correo: ronaldo@lgfirm.com
+Contraseña: Optimuzlogfa2021$$
+
+Autentthication Angular With Python
+
+JSON Web Tokens 
+
+FrontEnd
+
+AWS S3 - CloudFront - Angular - 
+
+BackEnd
+
+EC2 
+AWS EFS
+
+Usuario:
+
+- id
+- nombre
+- apellido
+- correo
+- contraseña : Encriptada - Contraseña
+- estado
+
+Asignacion - Usuario
+
+#id_usuario
+#id_empresa
+
+
+Empresa
+
+- id
+- nit
+- nombre
+- direccion
+- logo
+- slogan
+- cantidad_facturas_mensual : 100 
+
+- Automatico - Manual Por el momento - 
+Reportes:
+
+* count posicionlogo usuario >= cantidad_facturas_mensual
+
+
+PosicionLogo
+
+id
+posicionlogo
+url
+usuario
+fecha
+hora
+
+
+- App -
+
+- Deployment *  FrontEnd - BackEnd 50% - 
+- Base de Datos *  

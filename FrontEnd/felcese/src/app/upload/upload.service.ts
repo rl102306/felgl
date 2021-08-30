@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpRequest, HttpEvent, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEvent, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
@@ -17,15 +17,30 @@ export class UploadService {
   }
 
 
-  public uploadfile(formData: any) {
+  public uploadfile(formData: any,token:any) {
+
+    let httpOptions = {
+
+      headers: new HttpHeaders({
+        'Authorization': 'token '+ token
+      })
+    };
   
-    return this.http.post<any>(`${this.DJANGO_SERVER}/upload/post`, formData);
+    return this.http.post<any>(`${this.DJANGO_SERVER}/upload/api/post`, formData,httpOptions);
 
   }
 
-  public postfile(formData:any){
+  public postfile(formData:any,token:any){
 
-    return this.http.post<any>(`${this.DJANGO_SERVER}/upload/posicion/post`, formData);
+    let httpOptions = {
+
+      headers: new HttpHeaders({
+        'Authorization': 'token '+ token
+      })
+    };
+  
+
+    return this.http.post<any>(`${this.DJANGO_SERVER}/upload/api/posicion/post`, formData,httpOptions);
     
   }
 
