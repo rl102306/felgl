@@ -27,7 +27,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 urlpatterns = [
     
     path('admin/', admin.site.urls),
-    path('upload/', include('uploadapp.urls')),
+    path('api/', include('uploadapp.urls')),
     path('auth', ObtainAuthToken.as_view()),
     
 ]

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Router, CanActivate, ActivatedRouteSnapshot,RouterStateSnapshot, UrlTree } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -13,25 +14,54 @@ import { Router, CanActivate, ActivatedRouteSnapshot,RouterStateSnapshot, UrlTre
 export class UserService {
 
 
-  private httpOptions: any;
+  constructor(private http: HttpClient,private router:Router) { 
 
-  DJANGO_SERVER: string = "http://127.0.0.1:8000";
+  }
 
-  //http://localhost:8000/auth
+/*
   
+  //DJANGO_SERVER = "http://logfelappawsenv.eba-np4mfdst.us-west-2.elasticbeanstalk.com";
+
+  DJANGO_SERVER = "http://localhost:8000";
 
   private response: any;
 
   private isloggedIn: any;
 
-  constructor(private http: HttpClient,private router:Router) { 
+  private user_cur : any;
 
-  }
-
-  public Token(formData:any){
+  private response_token: any;
 
 
-    return this.http.post<any>(`${this.DJANGO_SERVER}/auth`, formData);
+  public Token(){
+
+
+    const formData = new FormData();
+    
+    formData.append('username', 'logfel_user_token');
+
+    formData.append('password','Tokenulog2021$$');
+
+
+
+    return this.http.post<any>(`${this.DJANGO_SERVER}/auth`, formData).subscribe(
+
+      (res) => {
+    
+        this.response_token = res;
+
+        console.log(this.response_token);
+
+        console.log(localStorage.setItem('Token', JSON.stringify(this.response_token)));
+
+      },
+    
+      (err) => {  
+    
+        console.log(err);
+    
+      }
+    );
       
   }
 
@@ -44,21 +74,17 @@ export class UserService {
       })
     };
  
-    return this.http.post<any>(`${this.DJANGO_SERVER}/upload/api/login/post`,formData,httpOptions).subscribe(
+    return this.http.post<any>(`${this.DJANGO_SERVER}/api/login/post`,formData,httpOptions).subscribe(
 
       (res) => {
 
-        if(res == 1024){
-
           this.isloggedIn = true;
 
-          
+          this.user_cur = res;
+
           this.router.navigate(["ucf"])
 
-          
 
-
-        }
     
 
       },
@@ -82,5 +108,31 @@ export class UserService {
     
     return this.isloggedIn;
   
+  }*/
+
+  public newcompany(formData: any,token:any) {
+
+    let httpOptions = {
+
+      headers: new HttpHeaders({
+        'Authorization': 'token '+ token
+      })
+    };
+  
+    return this.http.post<any>(`${environment.API_URL_LOCAL}/api/company/post`,formData,httpOptions);
+
+  }
+
+  public newUser(formData: any,token:any) {
+
+    let httpOptions = {
+
+      headers: new HttpHeaders({
+        'Authorization': 'token '+ token
+      })
+    };
+  
+    return this.http.post<any>(`${environment.API_URL_LOCAL}/api/user/post`,formData,httpOptions);
+
   }
 }

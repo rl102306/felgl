@@ -23,6 +23,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 
 import {MatRadioModule} from '@angular/material/radio';
 
+import {MatMenuModule} from '@angular/material/menu';
+
 
 @NgModule({
   declarations: [],
@@ -33,6 +35,6 @@ import {MatRadioModule} from '@angular/material/radio';
 
     MatCardModule,MatButtonModule,MatInputModule,MatTabsModule,TextFieldModule,MatStepperModule,
     
-    MatRadioModule]
+    MatRadioModule,MatMenuModule]
 })
 export class MaterialModule { }

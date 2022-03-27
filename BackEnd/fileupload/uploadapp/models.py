@@ -1,7 +1,7 @@
-from django.core.exceptions import DisallowedRedirect
 from django.db import models
-from django.db.models.base import Model
-from django.db.models.fields import NullBooleanField, PositiveBigIntegerField
+
+from django.contrib.auth.models import User
+
 
 #from django.core import serializers
 
@@ -22,16 +22,16 @@ class PosicionLogo(models.Model):
 
     url = models.CharField(max_length=200,null=True)
 
-    usuario = models.IntegerField(null=False)
+    usuario = models.CharField(max_length=200,null=True)
 
-    fecha = models.DateField(null=False)
+    fecha = models.DateField(null=True)
 
     def __str__(self):
 
         return self.posicion
 
 
-class User(models.Model):
+''' class User(models.Model):
 
     id = models.AutoField(auto_created=True, primary_key=True,serialize=False,verbose_name='ID')
     
@@ -46,7 +46,7 @@ class User(models.Model):
     def __str__(self):
 
         return self.email
-
+'''
     
 class Empresa(models.Model):
 
@@ -54,23 +54,42 @@ class Empresa(models.Model):
     
     nombre = models.CharField(max_length=100, null=True)
     
-    nit = models.CharField(max_length=100,null=False)
+    nit = models.CharField(max_length=100,null=True)
     
     direccion = models.CharField(max_length=100, null=True)
     
-    logo = models.CharField(max_length=100, null=True)
+    logo = models.FileField(blank=True, null=True)
     
     slogan = models.CharField(max_length=500,null=True)
     
-    cantidad_facturas_mensual = models.IntegerField(null=False)
+    cantidad_facturas_mensual = models.CharField(max_length=500,null=False)
     
     estado = models.BooleanField(default=True)
 
     def __str__(self):
 
-        return self.email
+        return str(self.nombre)
+
+
+class Profile(models.Model):
+
+    id = models.AutoField(auto_created=True, primary_key=True,serialize=False,verbose_name='ID')
+
+    user = models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE)
+
+    empresa = models.ForeignKey(Empresa,null=True,blank=True,on_delete=models.CASCADE)
+
+    def __str__(self):
+
+        return str(self.id)
+
 
     
+    class Meta:
+
+        verbose_name = 'Profile'
+
+        verbose_name_plural = 'Profiles'
 
 
 

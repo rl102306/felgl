@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UserService } from '../user/user.service';
+import { AuthServiceService } from '../Auth/auth-service.service';
 
-import { Router,ActivatedRoute} from '@angular/router'
+import { FormBuilder, Validators } from '@angular/forms';
 
-import { Form, FormBuilder,AbstractControl, FormControl, FormGroup ,Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
+import { BreakpointObserver } from '@angular/cdk/layout';
+
+import {StepperOrientation} from '@angular/material/stepper';
+
+import {map} from 'rxjs/operators';
+
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +21,7 @@ import { Form, FormBuilder,AbstractControl, FormControl, FormGroup ,Validators }
 })
 export class LoginComponent implements OnInit {
 
-  //private username:any;
 
-  //private password:any;
 
   public login_form: any;
 
@@ -24,11 +29,33 @@ export class LoginComponent implements OnInit {
 
   public response_login:any;
 
-  public retUrl: string = 'ucf';
+  public token:any;
 
-  constructor(private _formBuilder: FormBuilder,private utok:UserService,private router: Router, 
-    private activatedRoute:ActivatedRoute) {
+  public data:any;
+  
+  public hide = true;
+  
+  isLoggedIn$: Observable<boolean>;
 
+  stepperOrientation: Observable<StepperOrientation>
+
+    
+
+  constructor(
+    private _formBuilder: FormBuilder,
+    
+    private authService:AuthServiceService,
+    
+    breakpointObserver: BreakpointObserver,
+    
+   ) {
+    this.isLoggedIn$ = this.authService.isLoggedIn;
+
+    this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
+
+      .pipe(map(({matches}) => matches ? 'horizontal' : 'vertical'));
+
+    
      }
 
   ngOnInit(): void {
@@ -41,57 +68,32 @@ export class LoginComponent implements OnInit {
 
    })
 
-   this.activatedRoute.queryParamMap
-                .subscribe(params => {
-            this.retUrl != params.get('retUrl'); 
-            console.log( 'LoginComponent/ngOnInit '+ this.retUrl);
-        });
+   this.isLoggedIn$ = this.authService.isLoggedIn;
+
+
   }
+
+ 
+
 
   
 
 
-  onSubmitToken() {
+  onSubmitLogin() {
 
-    /*const formData = new FormData();
+    this.authService.token();
     
-    formData.append('username', 'logfel_user_token');
+    this.token = localStorage.getItem('Token');
 
-    formData.append('password','Tokenulog2021$$');
-
-    
-    this.utok.Token(formData).subscribe(
-
-      (res) => {
-    
-        this.response_token = res;
-
-        console.log('Vamo a ver 2 : '+ this.response_token);
-
-      },
-    
-      (err) => {  
-    
-        //console.log(err);
-    
-      }
-    );*/
-
-    this.response_token = "d5894c0321e4ef7b55b4eac02c027e484167fd97"
+    this.data = JSON.parse(this.token).token;
 
     const formDatalogin = new FormData();
 
-    console.log('Hola'+ this.login_form.get('user').value)
-  
     formDatalogin.append('username',this.login_form.get('user').value);
 
     formDatalogin.append('password',this.login_form.get('pass').value);
 
-
-    this.utok.login(formDatalogin,this.response_token)
-
-
-
+    this.authService.login(formDatalogin,this.data)
 
   }
 

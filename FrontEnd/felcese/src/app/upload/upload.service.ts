@@ -3,14 +3,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-
-
-  DJANGO_SERVER: string = "http://127.0.0.1:8000";
 
   constructor(private http: HttpClient) {
 
@@ -25,8 +23,10 @@ export class UploadService {
         'Authorization': 'token '+ token
       })
     };
-  
-    return this.http.post<any>(`${this.DJANGO_SERVER}/upload/api/post`, formData,httpOptions);
+    
+    // FU = File Upload
+
+    return this.http.post<any>(`${environment.API_URL_LOCAL}/api/fu/post`,formData,httpOptions);
 
   }
 
@@ -40,7 +40,7 @@ export class UploadService {
     };
   
 
-    return this.http.post<any>(`${this.DJANGO_SERVER}/upload/api/posicion/post`, formData,httpOptions);
+    return this.http.post<any>(`${environment.API_URL_LOCAL}/api/posicion/post`, formData,httpOptions);
     
   }
 

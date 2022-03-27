@@ -1,7 +1,4 @@
 
-
-
-
 from rest_framework import serializers, views
 
 from rest_framework.parsers import FileUploadParser
@@ -18,7 +15,7 @@ from rest_framework.throttling import UserRateThrottle
 
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
-from .serializers import FileSerializer,PosicionSerializer, UserSerializar
+from .serializers import FileSerializer,PosicionSerializer,UserSerializar,EmpresaSerializer, GetUserCompany
 
 from reportlab.pdfgen import canvas
 
@@ -32,6 +29,8 @@ from django.contrib import auth
 
 from rest_framework.response import Response
 
+import json
+
 class FileUploadView(APIView):
 
     authentication_classes = (TokenAuthentication,)
@@ -42,8 +41,6 @@ class FileUploadView(APIView):
 
     def post(self, request, *args, **kwargs):
      
-
-
       file_serializer = FileSerializer(data=request.data)
 
       if file_serializer.is_valid():
@@ -56,6 +53,7 @@ class FileUploadView(APIView):
 
           return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
  
+
 class UserRegistrationView(APIView):
 
     authentication_classes = (TokenAuthentication,)
@@ -64,7 +62,38 @@ class UserRegistrationView(APIView):
 
     def post(self,request, *args, **kwargs):
 
-        user_serializer = UserSerializar(data = request.data)
+
+        
+        name_user = request.POST['firts_name']
+        
+        pasword = request.POST['password']
+
+        emal = request.POST['email']
+
+        usname = request.POST['username']
+        
+        isactive = False
+
+        usernew = User.objects.create_user(
+
+            username = usname,
+
+            email = emal,
+
+            password = pasword,
+
+            first_name = name_user,
+
+            is_active = isactive
+
+        )
+
+        return Response(status=status.HTTP_201_CREATED)
+
+
+    '''    
+    
+    user_serializer = UserSerializar(data = request.data)
 
         if user_serializer.is_valid():
 
@@ -75,7 +104,7 @@ class UserRegistrationView(APIView):
         else:
             print(user_serializer.errors)
 
-            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)'''
 
 
 class FileSend(APIView):
@@ -86,45 +115,59 @@ class FileSend(APIView):
 
     def post(self,request, *args, **kwargs):
 
-        file_last = FileSerializer.last()
+        #file_last = FileSerializer.last()
 
+        useridjson = request.POST['usuario']
+        
+        posicionlogo = request.POST['posicion']
+
+        urlfile = request.POST['url']
+
+
+        
         posicion_serializer = PosicionSerializer(data=request.data)
 
         
           
         if posicion_serializer.is_valid():
 
+
             posicion_serializer.save()
 
-            logo = canvas.Canvas('media/logo.pdf')
+            #Cambiar esto por que toma un archivo en especifico
 
-            direccion = PosicionSerializer.last()
+            #filepdfini = '.' + urlfile
 
-            dire = str(direccion)
+            idulast = PosicionSerializer.idurllast(urlfile)
 
-            print(dire)
+            
+            filepdfini = 'fileini' + str(idulast) + '.pdf'
 
-            if dire == 'derecha':
+            filepdfiniruta = './media/'+ filepdfini
 
-                print(direccion)
+            logo = canvas.Canvas(filepdfiniruta)
 
-                logo.drawImage('media/lgfirmlogo.jpg', 400, 720, 180, 60)
+            logofile = PosicionSerializer.getlogourl(useridjson)
+
+            logfilecp = '.' + logofile
+
+            if posicionlogo == 'derecha':
+
+                logo.drawImage(logfilecp, 400, 720, 180, 60)
 
                 logo.save()
             
-            elif dire  == 'izquierda':
+            elif posicionlogo  == 'izquierda':
 
-                print(direccion)
-
-                logo.drawImage('media/lgfirmlogo.jpg', 29, 720, 180, 60)
+                logo.drawImage(logfilecp, 29, 720, 180, 60)
 
                 logo.save()
 
-            logopdf = PdfFileReader(open("media/logo.pdf","rb"))
+            logopdf = PdfFileReader(open(filepdfiniruta,"rb"))
 
             fsatandlogo = PdfFileWriter()
 
-            urlfilelast = "media/" + str(file_last)
+            urlfilelast = "." + str(urlfile)
 
             fsatpdf = PdfFileReader(open(urlfilelast,"rb"))
 
@@ -140,12 +183,15 @@ class FileSend(APIView):
 
                 fsatandlogo.addPage(fsatpdf_page)
 
-        
-            with open("media/factlogo.pdf","wb") as outputStream:
+            filepdffin = 'filefin' + str(idulast) + '.pdf'
+
+            filepdffinruta = './media/'+ filepdffin
+
+            with open(filepdffinruta,"wb") as outputStream:
 
                 fsatandlogo.write(outputStream)
 
-                file_fact_url = "/media/factlogo.pdf" 
+                file_fact_url = "/media/"+filepdffin 
 
             
             
@@ -177,23 +223,85 @@ class UserLoginView(APIView):
             username=request.POST['username'],
 
             password = request.POST['password'])
-            
+
             
             if user is not None:
 
-
-                
                 auth.login(request,user)
+
+                id_usuario = request.user.id
                 
-                
-                return Response('1024',status=status.HTTP_200_OK)
+                return Response(id_usuario,
+                    status=200,
+                    content_type='text/plain')
 
             else:
-                # return render (request,'accounts/login.html', {'error':'Username or password is incorrect!'})
-                # grint('Hola'+ request.POST['username'])
                 
                 return Response('1900',status=status.HTTP_400_BAD_REQUEST)
+
+
         
         else:
 
-            return Response('Hola')#Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+#CODIGO NUEVO
+
+class CompanyRegistrationView(APIView): 
+
+    authentication_classes = (TokenAuthentication,)
+
+    permission_classes = (IsAuthenticated,)
+
+    parser_class = (FileUploadParser,)
+
+    def post(self,request, *args, **kwargs):
+
+        company_serializer = EmpresaSerializer(data = request.data)
+
+        if company_serializer.is_valid():
+
+            company_serializer.save()
+
+            return Response(company_serializer.data,status=status.HTTP_201_CREATED)
+
+        else:
+            print(company_serializer.errors)
+
+            return Response(company_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GUC(APIView): 
+
+    authentication_classes = (TokenAuthentication,)
+
+    permission_classes = (IsAuthenticated,)
+
+ 
+    def get(self, request, *args, **kwargs):
+
+        if request.method == 'GET':
+
+            data = request.data
+
+            iduid=request.POST['uid']
+
+
+            print(iduid)
+
+            
+            guc_serializer = GetUserCompany.getuc(iduid)
+
+            data = json.loads(guc_serializer)
+
+            for key, value in data[0].items():
+
+                print(key+":"+str(value))
+
+            json_string = json.dumps(guc_serializer)
+
+            #print(json_string)
+
+            #print("Datatype"+str(data))
+
+        return Response(guc_serializer)

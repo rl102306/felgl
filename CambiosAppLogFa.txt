@@ -61,3 +61,129 @@ hora
 
 - Deployment *  FrontEnd - BackEnd 50% - 
 - Base de Datos *  
+
+/*-+0.56.itlg_aws
+
+Ruth Contreras - 20
+Andrea Dieguez - 20
+Catherien Posadas . 20
+
+Juan Maguiel - 19
+Lucia Floridalma - 
+
+Maria Stefany Garcia . 20
+Feliz amilcar ixcamey - 20
+
+ceseonline.com.gt/logfel
+
+
+Agencia de Carga - Continental Corp
+
+* - 
+
+* - Lucina Valenzuela
+
+* - 10
+
+* - Servicios
+
+* - 
+
+
+Usuario para generar los tokens:
+
+Grupo: Users_Token
+Usuario: logfel_user_token
+Contraseña: Tokenulog2021$$
+
+Grupo: Usuarios_Login
+
+Usuario: vgomez
+Contraseña: Vgomez2021$$
+
+Inicio de sesion valido : Codigo 1024
+Inicio de sesion invalido : Codigo 1900
+
+
+IAM User AWS 
+
+User: logfel_eb_user
+Contraseña: Eblog2021$$
+
+Grupo: Users_EB
+
+
+Creacion de una VPC
+
+eipalloc-08ba7fd63c30e82e7 - IP Publica Estatica 
+SubNetPublica y SubNetPrivada
+
+AWS
+
+Super User Django 
+
+logfelapp optimuz
+Op2021$$
+
+
+Grupo: Group_Token
+Usuario: logfel_user_token
+Contraseña: Tokenulog2021$$
+
+tuereseltalentohumano
+
+
+Refresh TOkens en el Login
+Agregar una nueva forma de agregar otro logo por usuario
+Filtrar el logo por usuario
+Bam9903$$cese
+228601
+/*-+0.56.itlg_aws
+
+edb8ae764b569d56a2f17e3111d3053ccb657be9
+
+Enviar recibira en los proximos 15 minutos el codigo de activacion.
+
+Septiembre 14 09 2021
+
+1. Almacenar el id_usuario al hacer login - Listo.
+
+2. Hacer la busqueda en la tabla profile con el user_id obtener empresa_id- Listo.
+
+3. Obtener el logo con la empresa_id en la tabla empresa.
+
+4. Obtener el logo. Guardar la ruta del logo. - Listo
+
+5. Al momento de darle generar es donde tengo que hacer estas consultas lo que tengo que enviar en la solicitud es el usuario_id
+Y del lado del backend extraigo esta data para obtener el logo
+ - empresa_id
+ - ruta_logo
+
+Crear archivo donde se pone el logo- Listo
+
+Crear archivo factlogo . Listo
+
+Eliminar el archivo factlogo - Pendiente
+
+3. Crear usuario desde Angular con estado inactivo - Listo
+
+4. Descargar e instalar Flutter e instalar el webview 
+
+
+Soporte56$
+
+FRONTEND 
+
+BUCKET S3
+http://logfelapp.s3-website-us-west-2.amazonaws.com
+
+BACKEND
+
+EB
+http://logfelappawsenv.eba-np4mfdst.us-west-2.elasticbeanstalk.com/admin/login/?next=/admin/
+
+URL S3
+
+http://logfel.ceseonline.com.gt
+
+Rgomez2021$$

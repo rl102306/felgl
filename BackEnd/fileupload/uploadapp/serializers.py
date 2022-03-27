@@ -1,10 +1,8 @@
 
-from django.db import models
-
-
 from rest_framework import serializers
+from rest_framework.utils import field_mapping
 
-from .models import File, PosicionLogo , User , Empresa
+from .models import File, PosicionLogo , User , Empresa, Profile
 
 class FileSerializer(serializers.ModelSerializer):
     
@@ -21,6 +19,7 @@ class FileSerializer(serializers.ModelSerializer):
 
         return rutalast
 
+
 class PosicionSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -29,14 +28,22 @@ class PosicionSerializer(serializers.ModelSerializer):
 
         fields = ('id','posicion','url','usuario','fecha')
 
-    def last():
 
-        
-        #dirlast = File.objects.order_by('id').last()
+    def getlogourl(uid):
 
-        dirlast = PosicionLogo.objects.order_by('id').last()
+        idcompany = Profile.objects.get(user_id = uid).empresa_id
 
-        return dirlast
+        logoc = Empresa.objects.get(id = idcompany)
+
+        url = logoc.logo.url
+
+        return url
+
+    def idurllast(urlast):
+
+        idurlast = PosicionLogo.objects.get(url = urlast).id
+
+        return idurlast
 
 class UserSerializar(serializers.ModelSerializer):
 
@@ -47,6 +54,14 @@ class UserSerializar(serializers.ModelSerializer):
 
         fields = ('id','nombre','correo','estado',
         'password')
+
+    '''
+    def login_user_id(user):
+
+        
+        return User.objects.get(username = user).id
+    '''
+
 
 class EmpresaSerializer(serializers.ModelSerializer):
 
@@ -59,8 +74,33 @@ class EmpresaSerializer(serializers.ModelSerializer):
         'cantidad_facturas_mensual'
         )
 
+
+
+class ProfileSeriaizer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Profile
+
+        fields = ('id','user_id','empresa_id')
+
+
+class GetUserCompany():
+
+    def getuc(uid):
+
+        from django.core import serializers
+
+
+        userid = serializers.serialize('json', Profile.objects.filter(user_id=uid),
         
+        fields = ('empresa'))
 
-    
+        test = Profile.objects.get(user_id = uid).empresa_id
 
+        print(test)
+
+        return userid
+
+        
 
