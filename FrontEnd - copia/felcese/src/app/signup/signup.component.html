@@ -1,0 +1,181 @@
+<app-header></app-header>
+<!-- Aca hay tabmien -->
+<div fxLayout="column" fxLayoutAlign="space-between">
+<!--
+  <div>
+<button mat-raised-button (click)="isEditable = !isEditable">
+  {{!isEditable ? 'Habilitar modo edicion' : 'Deshabilitar modo edicion'}}
+</button>
+</div>
+-->
+<mat-stepper class="stepper" [orientation]="(stepperOrientation | async)!" #stepper>
+    
+  <mat-step [stepControl]="userFromGroup" [editable]="isEditable">
+
+    <div fxLayout="row" fxLayoutAlign="space-around center" >
+    
+      <mat-card class="box">
+          
+      <mat-card-header style="text-align: center;">
+        <mat-card-title>Registrar Usuario</mat-card-title>
+      </mat-card-header>
+    
+      <form [formGroup]="userFromGroup" (ngSubmit)="onNewUser()" class="formsignup">
+        <mat-card-content>
+          <div fxLayout="column" fxLayout.gt-xs="row">
+            
+          <mat-icon>account_circle</mat-icon>
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Nombre" formControlName="name_user">
+          </mat-form-field>
+
+  
+          <mat-icon>lock</mat-icon>
+          <mat-form-field class="full-width-input">
+            <input matInput type="password" placeholder="Contraseña" formControlName="pass">
+          </mat-form-field>
+
+          <mat-icon>email</mat-icon>
+          <mat-form-field class="full-width-input">
+            <input matInput type="email" placeholder="Correo" formControlName="email">
+          </mat-form-field>
+
+          <mat-icon>perm_identity</mat-icon>
+          <mat-form-field class="full-width-input">
+          <input matInput placeholder="Usuario para iniciar sesion" formControlName="username" required>
+          </mat-form-field>
+
+
+
+        </div>
+        </mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-around center" >
+        <button mat-raised-button>
+          <a>Registrar</a>
+        </button>
+        </div>
+      </form>
+  
+    </mat-card>
+  </div>
+  <div></div>
+  <div>
+    <button mat-raised-button matStepperNext style="float: right;">Siguiente</button>
+  </div>
+  
+  </mat-step>
+
+
+  <mat-step [stepControl]="companyFormGroup" [editable]="isEditable">
+    
+    <div fxLayout="row" fxLayoutAlign="space-around center" >
+    
+  <mat-card class="box">
+  
+    <mat-card-header>
+      <mat-card-title>Crear Empresa</mat-card-title>
+    </mat-card-header>
+
+    <form [formGroup]="companyFormGroup" class="formnewcompany" (ngSubmit)="onNewcompany()">
+      <mat-card-content>
+        <div fxLayout="column" fxLayout.gt-xs="row">
+          
+        <mat-icon>business</mat-icon>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Nombre" formControlName="name_company" required>
+        </mat-form-field>
+
+        <mat-icon>perm_identity</mat-icon>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Nit" formControlName="nit_company" required>
+        </mat-form-field>
+
+        <mat-icon>home</mat-icon>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Dirrecion" formControlName="addres_company" required>
+        </mat-form-field>
+
+       </div>
+      </mat-card-content>
+    
+
+        <mat-card-content>
+          <div fxLayout="column" fxLayout.gt-xs="row">
+        
+        <mat-icon>pin</mat-icon>
+        <mat-form-field class="full-width-input">
+          <input matInput type='number' placeholder="Cantidad Facturas" formControlName="c_fact_company" required>
+        </mat-form-field>
+
+       
+      
+        <div>
+          <a>Logo</a>
+          <mat-icon>image</mat-icon>
+        <input type="file" name="name_file_fact" (change)="onChange($event)" required />
+
+      </div>
+    </div>
+      </mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="space-around center" >
+
+      <button mat-raised-button type="submit">
+        <a>Crear</a>
+      </button>
+    </div>
+    </form>
+
+  </mat-card>
+
+  </div>
+
+  <div>
+    <button mat-raised-button matStepperPrevious style="float: left;">Anterior</button>
+    <button mat-raised-button matStepperNext style="float: right;">Siguiente</button>
+  </div>
+</mat-step>
+
+
+<mat-step [stepControl]="infoEmail" [editable]="isEditable">
+  
+  <div fxLayout="row" fxLayoutAlign="space-around center" >
+    
+  <mat-card class="box">
+  
+    <mat-card-header>
+
+      <mat-card-title>Bienvenido a LOGFEL</mat-card-title>
+    
+    </mat-card-header>
+
+      <mat-card-content>
+
+      <h3>En este momento tu usuario se encuentra inactivo.</h3>
+ 
+  <address>
+
+    <h2>Escríbenos un correo a info@ceseonline.com.gt <br><a href="mailto:info@ceseonline.com.gt?subject=Activación%20Usuario&body=Empresa: %20 Usuario: %20">Enviar</a></h2><br> 
+    
+    <h4>Con el siguiente formato</h4><br>
+
+    <h4>Empresa: </h4><br>
+
+    <h4>Usuario:</h4><br>
+    
+    <h4>Después de recibido el correo lo habilitaremos.<br></h4>
+
+  </address>
+  
+</mat-card-content>
+
+  </mat-card>
+  </div>
+  <div>
+    <button mat-raised-button matStepperPrevious style="float: left;">Anterior</button>
+  </div>
+</mat-step>
+
+
+</mat-stepper>
+
+</div>
